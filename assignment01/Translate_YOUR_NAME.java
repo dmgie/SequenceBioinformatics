@@ -23,8 +23,13 @@ public class Translate_YOUR_NAME {
 		for (var pair : list) {
 			translated.add(new FastA_YOUR_NAME.Pair(pair.header(), translate(pair.sequence())));
 		}
-		System.out.println(translated);
 		// todo: write translated sequences
+		if(args.length == 2){
+			FastA_YOUR_NAME.write(translated, args[1]);
+		}
+		else{
+			FastA_YOUR_NAME.write(translated, null);
+		}
 	}
 
 	public static String translate(String sequence) {

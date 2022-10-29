@@ -11,12 +11,15 @@ public class EchoFastA_YOUR_NAME {
 			throw new IOException("Usage: EchoFastA_YOUR_NAME infile [outFile]");
 
 		// todo: read FastA records from infile and echo to outfile or stdout (console)
-		var filename = args[0];
-		// Read file using buffered reader
-		var reader = new java.io.BufferedReader(new java.io.FileReader(filename));
-		while (reader.ready()) {
-			var line = reader.readLine();
-			System.out.println(line);
+		// Read file using read
+		var contents = FastA_YOUR_NAME.read(args[0]);
+		if(args.length == 2){
+			FastA_YOUR_NAME.write(contents, args[1]);
 		}
+		else{
+			FastA_YOUR_NAME.write(contents, null);
+		}
+
+
 	}
 }

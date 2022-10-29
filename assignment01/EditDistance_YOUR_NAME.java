@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,16 +34,35 @@ public class EditDistance_YOUR_NAME {
 
         // var only_seq = get_sequences_as_list(seqs);
         var pairwise = generate_combinations(seqs);
-        System.out.println(pairwise);
+
 
         try (Writer w = (args.length == 2 ? new FileWriter(args[1]) : new OutputStreamWriter(System.out))) {
             // todo: compute distance between any two sequences, using method
             // computeEditDistance(x,y) defined below
             // todo: write distance matrix
-
+            String matrix [] [] = new String [seqs.size()+1] [seqs.size()+1] ;
+            for (int i = 1; i <= seqs.size(); i++){
+                matrix [i][i] = " 0 ";
+                matrix [0][i] = "se"+ String.valueOf(i);
+                matrix [i][0] = "se"+ String.valueOf(i)+" ";
+            }
+            int c = 1;
+            int r = 1;
+            int max = seqs.size();
             for (var pair : pairwise) {
                 var dist = computeEditDistance(pair.seq1(), pair.seq2());
-                w.write(dist + " ");
+                c++;
+                if (c > max){
+                    r++;
+                    c = r+1;
+                }
+                matrix[r][c] = String.valueOf(dist);
+                matrix[c][r] = String.valueOf(dist);
+
+            }
+
+            for(String[] s : matrix) {
+                w.write(Arrays.toString(s)+"\n");
             }
         }
         // example of format:
