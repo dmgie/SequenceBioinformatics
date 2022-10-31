@@ -28,7 +28,7 @@ public class GlobalAligner_YOUR_NAME {
 		switch (mode) {
 		case "quadraticSpace" -> runNeedlemanWunschQuadraticSpace(list.get(0), list.get(1));
 		case "linearSpace" -> runNeedlemanWunschLinearSpace(list.get(0), list.get(1));
-		case "noDP" -> runNeedlemanWunschQuadraticSpace(list.get(0), list.get(1));
+		case "noDP" -> runNeedlemanWunschRecursively(list.get(0), list.get(1));
 		default -> throw new IOException("Unknown mode: " + mode);
 		}
 	}
@@ -252,12 +252,39 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 */
 	public static void runNeedlemanWunschRecursively(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
-		// todo: implement using recursive function computeF, , Assignment 2.3
+		// todo: print time
+		long start = System.currentTimeMillis();
+		int score = computeF(x.sequence().length()-1,y.sequence().length()-1,x.sequence(),y.sequence());
+		long end = System.currentTimeMillis();
+
+		System.out.println(score);
+		System.out.println("Time: " + (end - start) + " ms");
 
 	}
 
-	public static int computeF(int i, int j) {
-		// todo: implement
-		return 0;
+	public static int computeF(int i, int j, String x, String y) {
+		int gap_penalty = 1;
+		if(i == -1 && j == -1){
+			return 0;
+		}
+		else if(i == -1){
+			return -j*gap_penalty;
+		}
+		else if(j == -1){
+			return -i*gap_penalty;
+		}
+		else{
+			int m = Math.max(computeF(i-1, j-1, x, y) + s(x.charAt(i), y.charAt(j)), computeF(i-1, j, x, y)-gap_penalty);
+			int max = Math.max(m, computeF(i, j-1, x, y)-gap_penalty);
+			return max;
+		}
+	}
+	public static int s(char xi, char yj){
+		if(xi == yj){
+			return 1;
+		}
+		else{
+			return -1;
+		}
 	}
 }
