@@ -147,7 +147,7 @@ public class GlobalAligner_YOUR_NAME {
 
 		// Get the middle column
 
-		linear_space(x, y);
+		linear_space(x.sequence(), y.sequence(),0,0);
 	}
 
 	/**
@@ -157,14 +157,18 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param x
 	 * @param y
 	 */
-	public static void linear_space(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
+	public static void linear_space(String x, String y, int x_offset, int y_offset) {
+		System.out.println(x);
+		System.out.println(y);
+		System.out.println(x_offset);
+		System.out.println(y_offset);
 		// Initialise the constants used throughout the program
 		int gap_penalty = 1;
 		int match_score = 1;
 		int mismatch_score = -1;
 
-		int xLength = x.sequence().length();
-		int yLength = y.sequence().length();
+		int xLength = x.length();
+		int yLength = y.length();
 
 		int middle_column = Math.floorDiv(xLength, 2);
 
@@ -212,7 +216,7 @@ public class GlobalAligner_YOUR_NAME {
 			// loop through rows
 			for (int j = 1; j < yLength + 1; j++) {
 				int case1 = prev_column[j - 1]
-						+ (x.sequence().charAt(i - 1) == y.sequence().charAt(j - 1) ? match_score : mismatch_score);
+						+ (x.charAt(i - 1) == y.charAt(j - 1) ? match_score : mismatch_score);
 				int case2 = prev_column[j] - gap_penalty;
 				int case3 = current_column[j - 1] - gap_penalty;
 				int max = Math.max(case1, Math.max(case2, case3));
@@ -240,7 +244,21 @@ public class GlobalAligner_YOUR_NAME {
 		// print last value in current_column
 		System.out.println("Optimal score: " + current_column[yLength]);
 		// get the index of
-		System.out.println("Index of traceback: " + c_current[yLength] + " " + middle_column);
+		System.out.println("Index of traceback: " + (c_current[yLength]+y_offset) + " " + (middle_column+x_offset));
+
+		if(x.length()>3) {
+			String new1_x = x.substring(0, middle_column);
+			String new1_y = y.substring(0, c_current[yLength]);
+			linear_space(new1_x, new1_y, x_offset, y_offset);
+			if(x.length()>2){
+				String new2_x = x.substring(middle_column-1, x.length());
+				String new2_y = y.substring(c_current[yLength]-1, y.length());
+				x_offset += middle_column-1;
+				y_offset += c_current[yLength]-1;
+				linear_space(new2_x,new2_y,x_offset,y_offset);
+			}
+		}
+
 	}
 
 	/**
