@@ -145,8 +145,13 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 */
 	public static void runNeedlemanWunschLinearSpace(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
+		long start = System.currentTimeMillis();
 		ArrayList<ArrayList<Integer>> indices = linear_space(x.sequence(), y.sequence(),0,0,true);
 		System.out.println(indices);
+		print_alignment(x,y,indices);
+		long end = System.currentTimeMillis();
+		System.out.println("Time: " + (end - start) + " ms");
+
 	}
 
 	/**
@@ -246,26 +251,39 @@ public class GlobalAligner_YOUR_NAME {
 
 		ArrayList<ArrayList<Integer>> indices = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> cur_ind = new ArrayList<Integer>();
-		cur_ind.add(middle_column + x_offset);
-		cur_ind.add(c_current[yLength] + y_offset);
-		indices.add(cur_ind);
+		if (y.length()>=2){
+			cur_ind.add(middle_column + x_offset);
+			cur_ind.add(c_current[yLength] + y_offset);
+			indices.add(cur_ind);
+		}
+
+
 
 		if (x.length() > 2 && y.length()>=2) {
+
+			System.out.println(cur_ind);
+			System.out.println(x);
+			System.out.println(y);
+			System.out.println(y.length());
+			System.out.println(c_current[yLength]);
+
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
 			indices.addAll(linear_space(new1_x, new1_y, x_offset, y_offset, false));
 			String new2_y;
 			String new2_x;
-			if (c_current[yLength] != 0){
+
+
+			if (c_current[yLength] == 0 ){
+				new2_x = x.substring(middle_column - 1, x.length());
+				new2_y = y;
+				x_offset += middle_column - 1;
+			}
+			else{
 				new2_x = x.substring(middle_column - 1, x.length());
 				new2_y = y.substring(c_current[yLength] - 1, y.length());
 				x_offset += middle_column - 1;
 				y_offset += c_current[yLength] - 1;
-			}
-			else{
-				new2_x = x.substring(middle_column - 1, x.length());
-				new2_y = y;
-				x_offset += middle_column - 1;
 			}
 			indices.addAll(linear_space(new2_x, new2_y, x_offset, y_offset, false));
 		}
@@ -279,12 +297,58 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 * @param indices
 	 */
-	public static void linear_space(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y, ArrayList<ArrayList<Integer>> indices) {
+	public static void print_alignment(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y, ArrayList<ArrayList<Integer>> indices) {
 		String seqx = x.sequence();
 		String seqy = y.sequence();
-		for(int i = 0; i<seqx.length(); i++){
+		String s1 = "";
+		String s2 = "";
+		int d = 0;
+		for(int i = 1; i<=seqx.length(); i++){
 
+			if (i%40 == 0){
+				System.out.println(s1);
+				System.out.println(s2);
+				s1 = "";
+				s2 = "";
+			}
+
+			for(int q = 0; q<indices.size();q++){
+				if(indices.get(q).get(0) == i){
+					int indy = indices.get(q).get(1);
+
+
+					int com = i+d;
+					if (indy == com){
+						s1 += seqx.charAt(i-1);
+						s2 += seqy.charAt(indy-1);
+					}
+					else if(indy > com){
+						int dif = indy - com;
+						s1 += seqx.charAt(i-1);
+						s2 += seqy.charAt(com-1);
+						for(int w = 0; w<dif; w++){
+							s1 += "-";
+							s2 += seqy.charAt(com+w);
+						}
+						d += dif;
+					}
+					else{
+						int dif = i+d - indy;
+
+						s1 += seqx.charAt(i-1);
+						s2 += seqy.charAt(indy-1);
+						for(int w = 0; w<dif;w++){
+							s1 += seqx.charAt(i+w);
+							s2 += "-";
+						}
+						d -= dif;
+					}
+					break;
+				}
+			}
 		}
+		System.out.println(s1);
+		System.out.println(s2);
 	}
 
 	/**
@@ -299,7 +363,6 @@ public class GlobalAligner_YOUR_NAME {
 		long start = System.currentTimeMillis();
 		int score = computeF(x.sequence().length()-1,y.sequence().length()-1,x.sequence(),y.sequence());
 		long end = System.currentTimeMillis();
-
 		System.out.println(score);
 		System.out.println("Time: " + (end - start) + " ms");
 
