@@ -1,6 +1,8 @@
 package assignment02;
 
 import assignment02.FastA_YOUR_NAME;
+
+import javax.sql.rowset.spi.SyncResolver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -261,11 +263,7 @@ public class GlobalAligner_YOUR_NAME {
 
 		if (x.length() > 2 && y.length()>=2) {
 
-			System.out.println(cur_ind);
-			System.out.println(x);
-			System.out.println(y);
-			System.out.println(y.length());
-			System.out.println(c_current[yLength]);
+
 
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
@@ -303,11 +301,14 @@ public class GlobalAligner_YOUR_NAME {
 		String s1 = "";
 		String s2 = "";
 		int d = 0;
+		ArrayList<Integer> y_used = new ArrayList<Integer>();
 		for(int i = 1; i<=seqx.length(); i++){
 
-			if (i%40 == 0){
+			if (i%80 == 0){
+
 				System.out.println(s1);
 				System.out.println(s2);
+				System.out.println();
 				s1 = "";
 				s2 = "";
 			}
@@ -315,28 +316,48 @@ public class GlobalAligner_YOUR_NAME {
 			for(int q = 0; q<indices.size();q++){
 				if(indices.get(q).get(0) == i){
 					int indy = indices.get(q).get(1);
-
-
 					int com = i+d;
 					if (indy == com){
 						s1 += seqx.charAt(i-1);
+						if(y_used.contains(indy)){
+							System.out.println("Hello");
+							System.out.println(indy);
+							System.out.println(i);
+							break;
+						}
 						s2 += seqy.charAt(indy-1);
+						y_used.add(indy);
 					}
 					else if(indy > com){
 						int dif = indy - com;
 						s1 += seqx.charAt(i-1);
+						if(y_used.contains(com)){
+							System.out.println("He");
+							break;
+						}
 						s2 += seqy.charAt(com-1);
+						y_used.add(com);
 						for(int w = 0; w<dif; w++){
 							s1 += "-";
+							if(y_used.contains(com+w+1)){
+								break;
+							}
 							s2 += seqy.charAt(com+w);
+							y_used.add(com+w+1);
 						}
 						d += dif;
 					}
-					else{
-						int dif = i+d - indy;
+					else if (com > indy){
+						int dif = com - indy;
 
 						s1 += seqx.charAt(i-1);
-						s2 += seqy.charAt(indy-1);
+						if(!y_used.contains(indy)){
+							System.out.println("lo");
+							s2 += seqy.charAt(i+d-1);
+							y_used.add(i+d);
+						}
+						
+
 						for(int w = 0; w<dif;w++){
 							s1 += seqx.charAt(i+w);
 							s2 += "-";
@@ -345,10 +366,25 @@ public class GlobalAligner_YOUR_NAME {
 					}
 					break;
 				}
+				else if(q == indices.size()-1){
+					if (i != seqx.length()){
+						s1 += seqx.charAt(i-1);
+						s2 += "-";
+					}
+
+
+				}
 			}
 		}
+		for (int k = 1; k <= seqy.length(); k++){
+			if (!y_used.contains(k)){
+				s2 += seqy.charAt(k-1);
+			}
+		}
+
 		System.out.println(s1);
 		System.out.println(s2);
+
 	}
 
 	/**
