@@ -250,14 +250,23 @@ public class GlobalAligner_YOUR_NAME {
 		cur_ind.add(c_current[yLength] + y_offset);
 		indices.add(cur_ind);
 
-		if (x.length() > 2 && y.length()>2) {
+		if (x.length() > 2 && y.length()>=2) {
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
 			indices.addAll(linear_space(new1_x, new1_y, x_offset, y_offset, false));
-			String new2_x = x.substring(middle_column - 1, x.length());
-			String new2_y = y.substring(c_current[yLength] - 1, y.length());
-			x_offset += middle_column - 1;
-			y_offset += c_current[yLength] - 1;
+			String new2_y;
+			String new2_x;
+			if (c_current[yLength] != 0){
+				new2_x = x.substring(middle_column - 1, x.length());
+				new2_y = y.substring(c_current[yLength] - 1, y.length());
+				x_offset += middle_column - 1;
+				y_offset += c_current[yLength] - 1;
+			}
+			else{
+				new2_x = x.substring(middle_column - 1, x.length());
+				new2_y = y;
+				x_offset += middle_column - 1;
+			}
 			indices.addAll(linear_space(new2_x, new2_y, x_offset, y_offset, false));
 		}
 		return indices;
@@ -271,7 +280,11 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param indices
 	 */
 	public static void linear_space(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y, ArrayList<ArrayList<Integer>> indices) {
+		String seqx = x.sequence();
+		String seqy = y.sequence();
+		for(int i = 0; i<seqx.length(); i++){
 
+		}
 	}
 
 	/**
