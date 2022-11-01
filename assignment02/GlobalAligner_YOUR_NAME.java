@@ -356,7 +356,7 @@ public class GlobalAligner_YOUR_NAME {
 							s2 += seqy.charAt(i+d-1);
 							y_used.add(i+d);
 						}
-						
+
 
 						for(int w = 0; w<dif;w++){
 							s1 += seqx.charAt(i+w);

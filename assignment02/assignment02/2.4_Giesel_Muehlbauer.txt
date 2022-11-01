@@ -1,0 +1,11 @@
+2.4 Comparison
+
+The quadratic space algorithm uses O(nm) runtime and O(nm) space. It is easier to implement than linear space but memory might run out.
+The linear space algorithm uses only 2n (or 2m) space using the two column trick, but requires slightly more runtime (<2nm). It is harder to implement and may take double the time, but makes upfor it by using less space.
+The recursive algorithm again uses O(nm) space but additionally cubic time. It is again easier to implement, but impossible to use because it can not even calculate short alignments in acceptable timeframes.
+Runtimes: short medium long
+quadratic: 
+linear:
+recursive: more than 1h
+
+Authors: Daniel Giesel & Barbara Mühlbauer

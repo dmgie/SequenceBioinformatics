@@ -11,7 +11,7 @@ public class EchoFastA_YOUR_NAME {
 			throw new IOException("Usage: EchoFastA_YOUR_NAME infile [outFile]");
 
 		// todo: read FastA records from infile and echo to outfile or stdout (console)
-		// Read file using read
+		// Read file using FastA read
 		var contents = FastA_YOUR_NAME.read(args[0]);
 		if(args.length == 2){
 			FastA_YOUR_NAME.write(contents, args[1]);
