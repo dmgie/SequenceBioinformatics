@@ -2,7 +2,10 @@ package assignment02;
 
 import assignment02.FastA_YOUR_NAME;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.RandomAccess;
 
 // TODO: Implement as row-major order vector instead of 2D array
 
@@ -142,26 +145,21 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 */
 	public static void runNeedlemanWunschLinearSpace(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
-		// todo: implement, Assignment 2.2
-		// initialise a list of list of size 2
-
-		// Get the middle column
-
-		linear_space(x.sequence(), y.sequence(),0,0);
+		ArrayList<ArrayList<Integer>> indices = linear_space(x.sequence(), y.sequence(),0,0,true);
+		System.out.println(indices);
 	}
 
 	/**
-	 * Given two sequences, run the needleman wunsch algorithm to compute it in
-	 * linear space
+	 * Given two (sub)sequences and their offset from the start of the entire sequence, run the needleman wunsch algorithm to compute it in
+	 * linear space, returns the paired indices
 	 *
 	 * @param x
 	 * @param y
+	 * @param x_offset
+	 * @param y_offset
 	 */
-	public static void linear_space(String x, String y, int x_offset, int y_offset) {
-		System.out.println(x);
-		System.out.println(y);
-		System.out.println(x_offset);
-		System.out.println(y_offset);
+	public static ArrayList<ArrayList<Integer>> linear_space(String x, String y, int x_offset, int y_offset, Boolean first_call) {
+
 		// Initialise the constants used throughout the program
 		int gap_penalty = 1;
 		int match_score = 1;
@@ -241,21 +239,38 @@ public class GlobalAligner_YOUR_NAME {
 			}
 
 		}
-		// print last value in current_column
-		System.out.println("Optimal score: " + current_column[yLength]);
-		// get the index of
-		System.out.println("Index of traceback: " + (c_current[yLength]+y_offset) + " " + (middle_column+x_offset));
+		if (first_call) {
+			// print last value in current_column
+			System.out.println("Optimal score: " + current_column[yLength]);
+		}
 
-		if(x.length() > 2) {
+		ArrayList<ArrayList<Integer>> indices = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> cur_ind = new ArrayList<Integer>();
+		cur_ind.add(middle_column + x_offset);
+		cur_ind.add(c_current[yLength] + y_offset);
+		indices.add(cur_ind);
+
+		if (x.length() > 2 && y.length()>2) {
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
-			linear_space(new1_x, new1_y, x_offset, y_offset);
-			String new2_x = x.substring(middle_column-1, x.length());
-			String new2_y = y.substring(c_current[yLength]-1, y.length());
-			x_offset += middle_column-1;
-			y_offset += c_current[yLength]-1;
-			linear_space(new2_x,new2_y,x_offset,y_offset);
+			indices.addAll(linear_space(new1_x, new1_y, x_offset, y_offset, false));
+			String new2_x = x.substring(middle_column - 1, x.length());
+			String new2_y = y.substring(c_current[yLength] - 1, y.length());
+			x_offset += middle_column - 1;
+			y_offset += c_current[yLength] - 1;
+			indices.addAll(linear_space(new2_x, new2_y, x_offset, y_offset, false));
 		}
+		return indices;
+
+	}
+	/**
+	 * Given two sequences and a list of indices prints out the alignment
+	 *
+	 * @param x
+	 * @param y
+	 * @param indices
+	 */
+	public static void linear_space(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y, ArrayList<ArrayList<Integer>> indices) {
 
 	}
 
@@ -268,7 +283,6 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 */
 	public static void runNeedlemanWunschRecursively(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
-		// todo: print time
 		long start = System.currentTimeMillis();
 		int score = computeF(x.sequence().length()-1,y.sequence().length()-1,x.sequence(),y.sequence());
 		long end = System.currentTimeMillis();
