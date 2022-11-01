@@ -170,7 +170,7 @@ public class GlobalAligner_YOUR_NAME {
 		int xLength = x.length();
 		int yLength = y.length();
 
-		int middle_column = Math.floorDiv(xLength, 2);
+		int middle_column = Math.ceilDiv(xLength, 2);
 
 		//////////////////////// Initialise arrays to be used
 		// make two arrays that are equal to the number for rows, if x is number columns
@@ -246,17 +246,15 @@ public class GlobalAligner_YOUR_NAME {
 		// get the index of
 		System.out.println("Index of traceback: " + (c_current[yLength]+y_offset) + " " + (middle_column+x_offset));
 
-		if(x.length()>3) {
+		if(x.length() > 2) {
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
 			linear_space(new1_x, new1_y, x_offset, y_offset);
-			if(x.length()>2){
-				String new2_x = x.substring(middle_column-1, x.length());
-				String new2_y = y.substring(c_current[yLength]-1, y.length());
-				x_offset += middle_column-1;
-				y_offset += c_current[yLength]-1;
-				linear_space(new2_x,new2_y,x_offset,y_offset);
-			}
+			String new2_x = x.substring(middle_column-1, x.length());
+			String new2_y = y.substring(c_current[yLength]-1, y.length());
+			x_offset += middle_column-1;
+			y_offset += c_current[yLength]-1;
+			linear_space(new2_x,new2_y,x_offset,y_offset);
 		}
 
 	}
