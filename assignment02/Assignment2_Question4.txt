@@ -6,3 +6,11 @@ Linear    | O(2mn)  | O(n)
 No-table  | O(3^m)  | O(n)
 
 The simplest of all the algorithms, is the one that requires quadratic space and time. It allows us to both fill out to get the score of an alignment, as well as perform a traceback to get the actual alignment with relative ease. On the other hand, linear space allows us to reduce our space complexity from quadratic to linear, with the exception of additional time complexity. Obtaining a score for the alignment here is relatively easy, although getting an actual alignment requires a divide-and-conquer approach which is slightly more troublesome to implement. The no-table approach allows us to eliminate the need to compute via dynamic-programming approach, though this results in a much,much worse time-complexity.
+
+Actual runtimes
+
+Algorithm | Short | Medium | Long
+Quadratic | 50ms  | 122ms  | 1459ms
+Linear    | 26ms  | 33ms   | 107ms
+No-table  |        > 1 hr
+
