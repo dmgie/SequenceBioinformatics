@@ -6,29 +6,29 @@ import java.util.HashMap;
 import assignment01.*;
 
 /**
- * Translate_YOUR_NAME Author(s): YOUR_NAME Sequence Bioinformatics, WS 22/23
+ * Translate_GIESEL_MUEHLBAUER Author(s): GIESEL_MUEHLBAUER Sequence Bioinformatics, WS 22/23
  */
-public class Translate_YOUR_NAME {
+public class Translate_GIESEL_MUEHLBAUER {
 	public static void main(String[] args) throws IOException {
 		if (args.length < 1 || args.length > 2)
-			throw new IOException("Usage: Translate_YOUR_NAME infile [outFile]");
+			throw new IOException("Usage: Translate_GIESEL_MUEHLBAUER infile [outFile]");
 
 		// todo: read in FastA pairs
-		var list = FastA_YOUR_NAME.read(args[0]);
+		var list = FastA_GIESEL_MUEHLBAUER.read(args[0]);
 
 		// todo: compute translated sequences using translate(sequence) method defined
 		// below
-		var translated = new ArrayList<FastA_YOUR_NAME.Pair>();
+		var translated = new ArrayList<FastA_GIESEL_MUEHLBAUER.Pair>();
 
 		for (var pair : list) {
-			translated.add(new FastA_YOUR_NAME.Pair(pair.header(), translate(pair.sequence())));
+			translated.add(new FastA_GIESEL_MUEHLBAUER.Pair(pair.header(), translate(pair.sequence())));
 		}
 		// todo: write translated sequences
 		if(args.length == 2){
-			FastA_YOUR_NAME.write(translated, args[1]);
+			FastA_GIESEL_MUEHLBAUER.write(translated, args[1]);
 		}
 		else{
-			FastA_YOUR_NAME.write(translated, null);
+			FastA_GIESEL_MUEHLBAUER.write(translated, null);
 		}
 	}
 

@@ -9,19 +9,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * EditDistance_YOUR_NAME Author(s): YOUR_NAME Sequence Bioinformatics, WS 22/23
+ * EditDistance_GIESEL_MUEHLBAUER Author(s): GIESEL_MUEHLBAUER Sequence Bioinformatics, WS 22/23
  */
-public class EditDistance_YOUR_NAME {
+public class EditDistance_GIESEL_MUEHLBAUER {
 
     public static void main(String[] args) throws IOException {
         if (args.length < 1 || args.length > 2)
-            throw new IOException("Usage: EditDistance_YOUR_NAME infile [outFile]");
+            throw new IOException("Usage: EditDistance_GIESEL_MUEHLBAUER infile [outFile]");
 
         // todo: implement input of FastA records
 
         // todo: check that all input sequences have the same length, otherwise throw a
         // new IOException("Different lengths");
-        var seqs = FastA_YOUR_NAME.read(args[0]);
+        var seqs = FastA_GIESEL_MUEHLBAUER.read(args[0]);
 
         var length = 0;
         for (var pair : seqs) {
@@ -73,9 +73,9 @@ public class EditDistance_YOUR_NAME {
     }
 
     // Function to get all pariwise combinations from a list
-    // Maybe just take int a List<FastA_YOUR_NAME.Pair> and return a
+    // Maybe just take int a List<FastA_GIESEL_MUEHLBAUER.Pair> and return a
     // ArrayList<Tuple>, instead of first needing a list
-    public static ArrayList<Tuple> generate_combinations(List<FastA_YOUR_NAME.Pair> sequences) {
+    public static ArrayList<Tuple> generate_combinations(List<FastA_GIESEL_MUEHLBAUER.Pair> sequences) {
         var combinations = new ArrayList<Tuple>();
         for (int i = 0; i < sequences.size(); i++) {
             for (int j = i + 1; j < sequences.size(); j++) {
