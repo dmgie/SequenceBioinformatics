@@ -1,6 +1,6 @@
 package assignment02;
 
-import assignment02.FastA_YOUR_NAME;
+import assignment02.FastA_GIESEL_MUEHLBAUER;
 
 import javax.sql.rowset.spi.SyncResolver;
 import java.io.IOException;
@@ -12,18 +12,18 @@ import java.util.RandomAccess;
 // TODO: Implement as row-major order vector instead of 2D array
 
 /**
- * GlobalAligner_YOUR_NAME Sequence Bioinformatics, WS 22/23
+ * GlobalAligner_GIESEL_MUEHLBAUER Sequence Bioinformatics, WS 22/23
  */
-public class GlobalAligner_YOUR_NAME {
+public class GlobalAligner_GIESEL_MUEHLBAUER {
 	int gap_penalty = 1;
 	int match_score = 1;
 	int mismatch_score = -1;
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 1 || args.length > 2)
-			throw new IOException("Usage: GlobalAligner_YOUR_NAME infile [quadraticSpace|linearSpace|noDP]");
+			throw new IOException("Usage: GlobalAligner_GIESEL_MUEHLBAUER infile [quadraticSpace|linearSpace|noDP]");
 
-		var list = FastA_YOUR_NAME.read(args[0]);
+		var list = FastA_GIESEL_MUEHLBAUER.read(args[0]);
 
 		if (list.size() != 2)
 			throw new IOException("Wrong number of input sequences: " + list.size());
@@ -46,7 +46,7 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param x
 	 * @param y
 	 */
-	public static void runNeedlemanWunschQuadraticSpace(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
+	public static void runNeedlemanWunschQuadraticSpace(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y) {
 		// todo: implement, Assignment 2.1
 		int gap_penalty = 1;
 		int match_score = 1;
@@ -146,7 +146,7 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param x
 	 * @param y
 	 */
-	public static void runNeedlemanWunschLinearSpace(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
+	public static void runNeedlemanWunschLinearSpace(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y) {
 		long start = System.currentTimeMillis();
 		ArrayList<ArrayList<Integer>> indices = linear_space(x.sequence(), y.sequence(),0,0,true);
 		System.out.println(indices);
@@ -295,7 +295,7 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param y
 	 * @param indices
 	 */
-	public static void print_alignment(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y, ArrayList<ArrayList<Integer>> indices) {
+	public static void print_alignment(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y, ArrayList<ArrayList<Integer>> indices) {
 		String seqx = x.sequence();
 		String seqy = y.sequence();
 		String s1 = "";
@@ -395,7 +395,7 @@ public class GlobalAligner_YOUR_NAME {
 	 * @param x
 	 * @param y
 	 */
-	public static void runNeedlemanWunschRecursively(FastA_YOUR_NAME.Pair x, FastA_YOUR_NAME.Pair y) {
+	public static void runNeedlemanWunschRecursively(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y) {
 		long start = System.currentTimeMillis();
 		int score = computeF(x.sequence().length()-1,y.sequence().length()-1,x.sequence(),y.sequence());
 		long end = System.currentTimeMillis();
