@@ -4,10 +4,7 @@ import assignment02.FastA_GIESEL_MUEHLBAUER;
 
 import javax.sql.rowset.spi.SyncResolver;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.RandomAccess;
+import java.util.*;
 
 // TODO: Implement as row-major order vector instead of 2D array
 
@@ -81,6 +78,7 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 			}
 		}
 
+
 		// Print out the optimal score and a corresponding alignment
 		System.out.println("Optimal score: " + matrix[matrix.length - 1][matrix[0].length - 1]);
 
@@ -141,11 +139,87 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 	public static void runNeedlemanWunschLinearSpace(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y) {
 		long start = System.currentTimeMillis();
 		ArrayList<ArrayList<Integer>> indices = linear_space(x.sequence(), y.sequence(),0,0,true);
-		System.out.println(indices);
-		print_alignment(x,y,indices);
+
+		ArrayList<Integer> ind = new ArrayList<Integer>();
+		ind.add(x.sequence().length());
+		ind.add(y.sequence().length());
+		indices.add(ind);
+		Set<ArrayList<Integer>> in = new LinkedHashSet<ArrayList<Integer>>(indices);
+
+
+		print_ali(x,y,in);
 		long end = System.currentTimeMillis();
 		System.out.println("Time: " + (end - start) + " ms");
 
+	}
+	/**
+	 * Given two sequences and a list of indices prints out the alignment
+	 *
+	 * @param x
+	 * @param y
+	 * @param ind
+	 */
+
+
+	public static void print_ali(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y, Set<ArrayList<Integer>> ind){
+		String seqx = x.sequence();
+		String seqy = y.sequence();
+		String s1 = "";
+		String s2 = "";
+		int d = 0;
+		int repeat = 0;
+		Boolean firstLoop= true;
+		ArrayList<Integer> y_used = new ArrayList<Integer>();
+		for(ArrayList<Integer> i : ind) {
+
+
+			repeat++;
+			if (repeat % 80 == 0) {
+
+				System.out.println(s1);
+				System.out.println(s2);
+				System.out.println();
+				s1 = "";
+				s2 = "";
+				repeat = 0;
+			}
+			int xi = i.get(0)-1;
+			int yi = i.get(1)-1;
+			if (xi != 0 && firstLoop){
+				for (int w = 0; w<xi; w++){
+
+					s1 += seqx.charAt(w);
+					s2 += "-";
+					d--;
+				}
+			}
+			firstLoop = false;
+			if (xi+d == yi){
+				s1 += seqx.charAt(xi);
+				s2 += seqy.charAt(yi);
+				y_used.add(yi);
+			}
+			else if (xi+d < yi){
+				int dif = yi-(xi+d);
+				s1 += seqx.charAt(xi);
+				s2 += seqy.charAt(yi-dif);
+				for(int q = 1; q<=dif; q++){
+					s1 += "-";
+					s2 += seqy.charAt(yi-dif+q);
+					y_used.add(yi+q);
+					d++;
+				}
+			}
+			else{
+
+				s1 += seqx.charAt(xi);
+				s2 += "-";
+				d--;
+			}
+
+		}
+		System.out.println(s1);
+		System.out.println(s2);
 	}
 
 	/**
@@ -259,7 +333,7 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 
 			String new1_x = x.substring(0, middle_column);
 			String new1_y = y.substring(0, c_current[yLength]);
-			indices.addAll(linear_space(new1_x, new1_y, x_offset, y_offset, false));
+			indices.addAll(0, linear_space(new1_x, new1_y, x_offset, y_offset, false));
 			String new2_y;
 			String new2_x;
 
@@ -278,99 +352,6 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 			indices.addAll(linear_space(new2_x, new2_y, x_offset, y_offset, false));
 		}
 		return indices;
-
-	}
-	/**
-	 * Given two sequences and a list of indices prints out the alignment
-	 *
-	 * @param x
-	 * @param y
-	 * @param indices
-	 */
-	public static void print_alignment(FastA_GIESEL_MUEHLBAUER.Pair x, FastA_GIESEL_MUEHLBAUER.Pair y, ArrayList<ArrayList<Integer>> indices) {
-		String seqx = x.sequence();
-		String seqy = y.sequence();
-		String s1 = "";
-		String s2 = "";
-		int d = 0;
-		ArrayList<Integer> y_used = new ArrayList<Integer>();
-		for(int i = 1; i<=seqx.length(); i++){
-
-			if (i%80 == 0){
-
-				System.out.println(s1);
-				System.out.println(s2);
-				System.out.println();
-				s1 = "";
-				s2 = "";
-			}
-
-			for(int q = 0; q<indices.size();q++){
-				if(indices.get(q).get(0) == i){
-					int indy = indices.get(q).get(1);
-					int com = i+d;
-					if (indy == com){
-						s1 += seqx.charAt(i-1);
-						if(y_used.contains(indy)){
-							break;
-						}
-						s2 += seqy.charAt(indy-1);
-						y_used.add(indy);
-					}
-					else if(indy > com){
-						int dif = indy - com;
-						s1 += seqx.charAt(i-1);
-						if(y_used.contains(com)){
-							break;
-						}
-						s2 += seqy.charAt(com-1);
-						y_used.add(com);
-						for(int w = 0; w<dif; w++){
-							s1 += "-";
-							if(y_used.contains(com+w+1)){
-								break;
-							}
-							s2 += seqy.charAt(com+w);
-							y_used.add(com+w+1);
-						}
-						d += dif;
-					}
-					else if (com > indy){
-						int dif = com - indy;
-
-						s1 += seqx.charAt(i-1);
-						if(!y_used.contains(indy)){
-							s2 += seqy.charAt(i+d-1);
-							y_used.add(i+d);
-						}
-
-
-						for(int w = 0; w<dif;w++){
-							s1 += seqx.charAt(i+w);
-							s2 += "-";
-						}
-						d -= dif;
-					}
-					break;
-				}
-				else if(q == indices.size()-1){
-					if (i != seqx.length()){
-						s1 += seqx.charAt(i-1);
-						s2 += "-";
-					}
-
-
-				}
-			}
-		}
-		for (int k = 1; k <= seqy.length(); k++){
-			if (!y_used.contains(k)){
-				s2 += seqy.charAt(k-1);
-			}
-		}
-
-		System.out.println(s1);
-		System.out.println(s2);
 
 	}
 
