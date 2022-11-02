@@ -81,14 +81,6 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 			}
 		}
 
-		// print matrix, for debugging
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[0].length; j++) {
-				System.out.print(matrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-
 		// Print out the optimal score and a corresponding alignment
 		System.out.println("Optimal score: " + matrix[matrix.length - 1][matrix[0].length - 1]);
 
@@ -320,9 +312,6 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 					if (indy == com){
 						s1 += seqx.charAt(i-1);
 						if(y_used.contains(indy)){
-							System.out.println("Hello");
-							System.out.println(indy);
-							System.out.println(i);
 							break;
 						}
 						s2 += seqy.charAt(indy-1);
@@ -332,7 +321,6 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 						int dif = indy - com;
 						s1 += seqx.charAt(i-1);
 						if(y_used.contains(com)){
-							System.out.println("He");
 							break;
 						}
 						s2 += seqy.charAt(com-1);
@@ -352,7 +340,6 @@ public class GlobalAligner_GIESEL_MUEHLBAUER {
 
 						s1 += seqx.charAt(i-1);
 						if(!y_used.contains(indy)){
-							System.out.println("lo");
 							s2 += seqy.charAt(i+d-1);
 							y_used.add(i+d);
 						}

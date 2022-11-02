@@ -10,7 +10,7 @@ The simplest of all the algorithms, is the one that requires quadratic space and
 Actual runtimes
 
 Algorithm | Short | Medium | Long
-Quadratic | 50ms  | 122ms  | 1459ms
+Quadratic | 21ms  | 24ms   | 48ms
 Linear    | 26ms  | 33ms   | 107ms
 No-table  |        > 1 hr
 
