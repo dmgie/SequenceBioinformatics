@@ -38,7 +38,7 @@ public class CountEdgesSimpleMixedCycles_YOUR_Name {
 		// Multiply each length with each length and sum them up
 		int sum = 0;
 		for (int i = 0; i < numlist.length; i++) {
-			for (int j = 0; j < numlist.length; j++) {
+			for (int j = i+1; j < numlist.length; j++) {
 				sum += numlist[i] * numlist[j];
 			}
 		}
