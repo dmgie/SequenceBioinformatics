@@ -23,7 +23,7 @@ public class CountEdgesSimpleMixedCycles_YOUR_Name {
 
 		System.out.printf("Edges between different sequences: %d%n", numEdgesBetweenDifferenteSequences);
 
-		var numSimpleMixedCycles = 0;
+		var numSimpleMixedCycles = get_mixed_cycles(length);
 
 		// todo: implement counting of number of simple mixed cycles
 
@@ -45,8 +45,16 @@ public class CountEdgesSimpleMixedCycles_YOUR_Name {
 		return sum;
 	}
 
-	public static void get_mixed_cycles(int[] numlist) {
+	public static int get_mixed_cycles(int[] numlist) {
 		// calculate the number of simple mixed cycles given sequence lengths
-
+		int num = 1;
+		for (int i = 0; i < numlist.length; i++) {
+			int sum = 0;
+			for (int j = 1; j <= numlist[i]; j++) {
+				sum += j;
+			}
+			num *= sum;
+		}
+		return 2*num;
 	}
 }
