@@ -53,12 +53,37 @@ public class CountEdgesSimpleMixedCycles_YOUR_Name {
 			for (int j = i; j < numlist[0]; j++) {
 				for (int k = 0; k < numlist[1]; k++){
 					for (int l = k; l < numlist[1]; l++) {
+						if (i != j || k != l){
+							sum += 1;
+						}
 						for (int n = 0; n < numlist[2]; n++) {
 							for (int m = n; m < numlist[2]; m++){
 								if (i != j || k != l || m != n){
 									sum += 2;
 								}
 							}
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < numlist[0]; i++) {
+			for (int j = i; j < numlist[0]; j++) {
+				for (int k = 0; k < numlist[2]; k++) {
+					for (int l = k; l < numlist[2]; l++) {
+						if (i != j || k != l) {
+							sum += 1;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < numlist[1]; i++) {
+			for (int j = i; j < numlist[1]; j++) {
+				for (int k = 0; k < numlist[2]; k++) {
+					for (int l = k; l < numlist[2]; l++) {
+						if (i != j || k != l) {
+							sum += 1;
 						}
 					}
 				}
