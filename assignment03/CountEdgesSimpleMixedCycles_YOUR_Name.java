@@ -47,14 +47,24 @@ public class CountEdgesSimpleMixedCycles_YOUR_Name {
 
 	public static int get_mixed_cycles(int[] numlist) {
 		// calculate the number of simple mixed cycles given sequence lengths
-		int num = 1;
-		for (int i = 0; i < numlist.length; i++) {
-			int sum = 0;
-			for (int j = 1; j <= numlist[i]; j++) {
-				sum += j;
+		int sum = 0;
+
+		for (int i = 0; i < numlist[0]; i++) {
+			for (int j = i; j <= numlist[0]; j++) {
+				for (int k = 0; k < numlist[1]; k++){
+					for (int l = k; l < numlist[1]; l++) {
+						for (int n = 0; n < numlist[2]; n++) {
+							for (int m = n; m < numlist[2]; m++){
+								if (i != j || k != l || m != n){
+									sum += 1;
+								}
+							}
+						}
+					}
+				}
 			}
-			num *= sum;
 		}
-		return 2*num;
+
+		return sum;
 	}
 }
