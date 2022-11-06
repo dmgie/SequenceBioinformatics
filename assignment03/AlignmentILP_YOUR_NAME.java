@@ -27,7 +27,7 @@ public class AlignmentILP_YOUR_NAME {
 		try(var w=(args.length ==2?new FileWriter(args[1]):new OutputStreamWriter(System.out))) {
 			w.write("max: ");
 			// 1. write the objective function: loop over all pairs of sequences and all pairs of letters
-			System.out.println(objectiveFunction(list));
+			String obj_fun = objectiveFunction(list.get(0),list.get(1),list.get(2));
 
 			// 2. write out all the simple mixed cycle constraints between any two sequences
 
@@ -39,7 +39,7 @@ public class AlignmentILP_YOUR_NAME {
 		}
 	}
 
-	public String objectiveFunction(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
+	public static String objectiveFunction(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
 		String fun = "";
 		String s0 = seq1.sequence();
 		String s1 = seq2.sequence();
@@ -61,7 +61,7 @@ public class AlignmentILP_YOUR_NAME {
 		}
 		return fun;
 	}
-	 public int score(char x, char y){
+	 public static int score(char x, char y){
 		if(x == y){
 			return 4;
 		}
