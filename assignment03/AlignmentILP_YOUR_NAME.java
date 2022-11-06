@@ -25,17 +25,19 @@ public class AlignmentILP_YOUR_NAME {
 		// todo: setup and write out ILP based on extended alignment graph, with match score =  4 and mismatch score = 1
 
 		try(var w=(args.length ==2?new FileWriter(args[1]):new OutputStreamWriter(System.out))) {
-			w.write("max: ");
 			// 1. write the objective function: loop over all pairs of sequences and all pairs of letters
 			String obj_fun = objectiveFunction(list.get(0),list.get(1),list.get(2));
 
 			// 2. write out all the simple mixed cycle constraints between any two sequences
 			// 3. write out all the simple mixed cycle constraints between any three sequences
-			System.out.println(mixedCycles(list.get(0),list.get(1),list.get(2)));
+			String mix_cyc = mixedCycles(list.get(0),list.get(1),list.get(2));
 
 			// 4. write out the binary variable constraints
+			String bin = binary(list.get(0),list.get(1),list.get(2));
 
 			// 5. specify all variables as integers
+			String in = makeInt(list.get(0),list.get(1),list.get(2));
+			w.write("max: " + obj_fun + mix_cyc + in);
 		}
 	}
 
@@ -122,6 +124,51 @@ public class AlignmentILP_YOUR_NAME {
 			}
 		}
 		return mix_cy;
+	}
+	public static String binary(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
+		String con = "";
+		int s0 = seq1.sequence().length();
+		int s1 = seq2.sequence().length();
+		int s2 = seq3.sequence().length();
+		for(int i = 0; i < s0; i++){
+			for(int j = 0; j < s1;j++){
+				con += "x0" + String.valueOf(i)+ "_1" + String.valueOf(j) + "<1;\n";
+			}
+		}
+		for(int i = 0; i < s0; i++){
+			for(int j = 0; j < s2;j++){
+				con += "x0" + String.valueOf(i)+ "_2" + String.valueOf(j) + "<1;\n";
+			}
+		}
+		for(int i = 0; i < s1; i++){
+			for(int j = 0; j < s2;j++){
+				con += "x1" + String.valueOf(i)+ "_2" + String.valueOf(j) + "<1;\n";
+			}
+		}
+		return con;
+	}
+
+	public static String makeInt(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
+		String int_con = "int";
+		int s0 = seq1.sequence().length();
+		int s1 = seq2.sequence().length();
+		int s2 = seq3.sequence().length();
+		for(int i = 0; i < s0; i++){
+			for(int j = 0; j < s1;j++){
+				int_con += " x0" + String.valueOf(i)+ "_1" + String.valueOf(j) + ",";
+			}
+		}
+		for(int i = 0; i < s0; i++){
+			for(int j = 0; j < s2;j++){
+				int_con += " x0" + String.valueOf(i)+ "_2" + String.valueOf(j) + ",";
+			}
+		}
+		for(int i = 0; i < s1; i++){
+			for(int j = 0; j < s2;j++){
+				int_con += " x1" + String.valueOf(i)+ "_2" + String.valueOf(j) + ",";
+			}
+		}
+		return int_con.substring(0, int_con.length()-1)+ ";\n";
 	}
 
 }
