@@ -46,20 +46,28 @@ public class AlignmentILP_YOUR_NAME {
 		String s2 = seq3.sequence();
 		for(int i = 0; i < s0.length(); i++){
 			for(int j = 0; j < s1.length();j++){
-				fun += "+x0"+ String.valueOf(i)+ "_1"+ String.valueOf(j);
+				fun += "+" +String.valueOf(score(s0.charAt(i), s1.charAt(j)))+"*x0"+ String.valueOf(i)+ "_1"+ String.valueOf(j);
 			}
 		}
 		for(int i = 0; i < s0.length(); i++){
 			for(int j = 0; j < s2.length();j++){
-				fun += "+x0"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
+				fun += "+" +String.valueOf(score(s0.charAt(i), s2.charAt(j)))+"*x0"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
 			}
 		}
 		for(int i = 0; i < s1.length(); i++){
 			for(int j = 0; j < s2.length();j++){
-				fun += "+x1"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
+				fun += "+" +String.valueOf(score(s1.charAt(i), s2.charAt(j)))+"*x1"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
 			}
 		}
 		return fun;
 	}
+	 public int score(char x, char y){
+		if(x == y){
+			return 4;
+		}
+		else{
+			return 1;
+		}
+	 }
 
 }

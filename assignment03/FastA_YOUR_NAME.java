@@ -12,7 +12,7 @@ public class FastA_YOUR_NAME {
 	// Main function
 	public static void main(String[] args) throws IOException {
 		// Read the input file
-		ArrayList<Pair> input = read("temp.fasta");
+		ArrayList<Pair> input = read("three.fasta");
 
 		// Print the input
 		System.out.println("Input:");
