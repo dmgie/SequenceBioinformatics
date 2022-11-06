@@ -30,8 +30,8 @@ public class AlignmentILP_YOUR_NAME {
 			String obj_fun = objectiveFunction(list.get(0),list.get(1),list.get(2));
 
 			// 2. write out all the simple mixed cycle constraints between any two sequences
-
 			// 3. write out all the simple mixed cycle constraints between any three sequences
+			System.out.println(mixedCycles(list.get(0),list.get(1),list.get(2)));
 
 			// 4. write out the binary variable constraints
 
@@ -59,15 +59,69 @@ public class AlignmentILP_YOUR_NAME {
 				fun += "+" +String.valueOf(score(s1.charAt(i), s2.charAt(j)))+"*x1"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
 			}
 		}
-		return fun;
+		return fun+";";
 	}
-	 public static int score(char x, char y){
+	public static int score(char x, char y){
 		if(x == y){
 			return 4;
 		}
 		else{
 			return 1;
 		}
-	 }
+	}
+
+	public static String mixedCycles(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
+		String mix_cy = "";
+		int s0 = seq1.sequence().length();
+		int s1 = seq2.sequence().length();
+		int s2 = seq3.sequence().length();
+
+		for (int i = 0; i < s0; i++) {
+			for (int j = i; j < s0; j++) {
+				for (int k = 0; k < s2; k++) {
+					for (int l = k; l < s2; l++) {
+						if (i != j || k != l) {
+							mix_cy += "x0" + String.valueOf(j) + "_2" + String.valueOf(k) + " + x0" + String.valueOf(i) + "_2" + String.valueOf(l) + "< 1;\n";
+						}
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < s1; i++) {
+			for (int j = i; j < s1; j++) {
+				for (int k = 0; k < s2; k++) {
+					for (int l = k; l < s2; l++) {
+						if (i != j || k != l) {
+							mix_cy += "x1" + String.valueOf(j) + "_2" + String.valueOf(k) + " + x1" + String.valueOf(i) + "_2" + String.valueOf(l) + "< 1;\n";
+						}
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < s0; i++) {
+			for (int j = i; j < s0; j++) {
+				for (int k = 0; k < s1; k++) {
+					for (int l = k; l < s1; l++) {
+						if (i != j || k != l) {
+							mix_cy += "x0" + String.valueOf(j) + "_1" + String.valueOf(k) + " + x0" + String.valueOf(i) + "_1" + String.valueOf(l) + "< 1;\n";
+						}
+						for (int n = 0; n < s2; n++) {
+							for (int m = n; m < s2; m++) {
+								if (i != j || k != l || m != n) {
+									mix_cy += "x0" + String.valueOf(j) + "_1" + String.valueOf(k) + " + x1" + String.valueOf(l) + "_2" + String.valueOf(m) +
+											" + x0" + String.valueOf(i) + "_2" + String.valueOf(n) + "< 1;\n";
+									mix_cy += "x0" + String.valueOf(j) + "_2" + String.valueOf(m) + " + x1" + String.valueOf(k) + "_2" + String.valueOf(n) +
+											" + x0" + String.valueOf(i) + "_1" + String.valueOf(l) + "< 1;\n";
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return mix_cy;
+	}
 
 }
