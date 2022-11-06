@@ -1,6 +1,6 @@
 package assignment03;
 
-import assignment01.FastA_YOUR_NAME;
+import assignment03.FastA_YOUR_NAME;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,6 +27,7 @@ public class AlignmentILP_YOUR_NAME {
 		try(var w=(args.length ==2?new FileWriter(args[1]):new OutputStreamWriter(System.out))) {
 			w.write("max: ");
 			// 1. write the objective function: loop over all pairs of sequences and all pairs of letters
+			System.out.println(objectiveFunction(list));
 
 			// 2. write out all the simple mixed cycle constraints between any two sequences
 
@@ -36,6 +37,29 @@ public class AlignmentILP_YOUR_NAME {
 
 			// 5. specify all variables as integers
 		}
+	}
+
+	public String objectiveFunction(FastA_YOUR_NAME.Pair seq1, FastA_YOUR_NAME.Pair seq2, FastA_YOUR_NAME.Pair seq3){
+		String fun = "";
+		String s0 = seq1.sequence();
+		String s1 = seq2.sequence();
+		String s2 = seq3.sequence();
+		for(int i = 0; i < s0.length(); i++){
+			for(int j = 0; j < s1.length();j++){
+				fun += "+x0"+ String.valueOf(i)+ "_1"+ String.valueOf(j);
+			}
+		}
+		for(int i = 0; i < s0.length(); i++){
+			for(int j = 0; j < s2.length();j++){
+				fun += "+x0"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
+			}
+		}
+		for(int i = 0; i < s1.length(); i++){
+			for(int j = 0; j < s2.length();j++){
+				fun += "+x1"+ String.valueOf(i)+ "_2"+ String.valueOf(j);
+			}
+		}
+		return fun;
 	}
 
 }
