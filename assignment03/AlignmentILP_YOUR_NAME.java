@@ -113,9 +113,9 @@ public class AlignmentILP_YOUR_NAME {
 							for (int m = n; m < s2; m++) {
 								if (i != j || k != l || m != n) {
 									mix_cy += "x0" + String.valueOf(j) + "_1" + String.valueOf(k) + " + x1" + String.valueOf(l) + "_2" + String.valueOf(m) +
-											" + x0" + String.valueOf(i) + "_2" + String.valueOf(n) + "< 1;\n";
+											" + x0" + String.valueOf(i) + "_2" + String.valueOf(n) + "< 2;\n";
 									mix_cy += "x0" + String.valueOf(j) + "_2" + String.valueOf(m) + " + x1" + String.valueOf(k) + "_2" + String.valueOf(n) +
-											" + x0" + String.valueOf(i) + "_1" + String.valueOf(l) + "< 1;\n";
+											" + x0" + String.valueOf(i) + "_1" + String.valueOf(l) + "< 2;\n";
 								}
 							}
 						}
