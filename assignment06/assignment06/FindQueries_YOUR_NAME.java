@@ -91,14 +91,16 @@ public class FindQueries_YOUR_NAME {
 		return nodeFind(child,query);
 	}
 
-	public static Collection<Integer> nodeFind(NaiveSuffixTree.Node node, String query){
+	public static ArrayList<Integer> nodeFind(NaiveSuffixTree.Node node, String query){
 		String label = node.getLetters();
-		ArrayList<Integer> found = null;
+		ArrayList<Integer> found = new ArrayList<Integer>();
 		if(query.length()>label.length()){
 			if(label.equals(query.substring(0,label.length()))){
 				String newQuery = query.substring(label.length());
 				NaiveSuffixTree.Node child = node.getChild(newQuery.charAt(0));
-				return found.addAll(nodeFind(child,newQuery));
+				ArrayList<Integer> chi = nodeFind(child,newQuery);
+				found.addAll(chi);
+				return found;
 			}
 			else{
 				return found;
@@ -121,10 +123,10 @@ public class FindQueries_YOUR_NAME {
 	}
 
 	public static ArrayList<NaiveSuffixTree.Node> getLeaves(NaiveSuffixTree.Node node){
-		ArrayList<NaiveSuffixTree.Node> leaves;
+		ArrayList<NaiveSuffixTree.Node> leaves = new ArrayList<NaiveSuffixTree.Node>();
 		var children = node.getChildren();
 		ArrayList<NaiveSuffixTree.Node> copyChildren = new ArrayList<NaiveSuffixTree.Node>(children);
-		int n = children.size();
+		int n = copyChildren.size();
 		for (int i=0; i<n; i++){
 			if(copyChildren.get(i).getSuffixPos() == -1){
 				leaves.addAll(getLeaves(copyChildren.get(i)));
@@ -133,5 +135,6 @@ public class FindQueries_YOUR_NAME {
 				leaves.add(copyChildren.get(i));
 			}
 		}
+		return  leaves;
 	}
 }
