@@ -51,7 +51,6 @@ public class FindQueries_YOUR_NAME {
 			throw new RuntimeException("No query given");
 		}
 		NaiveSuffixTree.Node root = suffixTree.getRoot();
-		suffixTree.printTree();
 		NaiveSuffixTree.Node child = root.getChild(query.charAt(0));
 		return nodeContains(child,query);
 	}
@@ -60,7 +59,7 @@ public class FindQueries_YOUR_NAME {
 		String label = node.getLetters();
 		if(query.length()>label.length()){
 			if(label.equals(query.substring(0,label.length()))){
-				String newQuery = query.substring(label.length()-1);
+				String newQuery = query.substring(label.length());
 				NaiveSuffixTree.Node child = node.getChild(newQuery.charAt(0));
 				return nodeContains(child,newQuery);
 			}
