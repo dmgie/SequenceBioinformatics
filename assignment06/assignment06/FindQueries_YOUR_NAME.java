@@ -127,17 +127,22 @@ public class FindQueries_YOUR_NAME {
 		var children = node.getChildren();
 		ArrayList<NaiveSuffixTree.Node> copyChildren = new ArrayList<NaiveSuffixTree.Node>(children);
 		int n = copyChildren.size();
-		for (int i=0; i<n; i++){
-			if(copyChildren.get(i).getSuffixPos() == -1){
-				leaves.addAll(getLeaves(copyChildren.get(i)));
-			}
-			else{
-				leaves.add(copyChildren.get(i));
-			}
-		}
+		System.out.println(n);
 		if(copyChildren.size()==0){
 			leaves.add(node);
 		}
+		else{
+			for (int i=0; i<n; i++){
+				if(copyChildren.get(i).getSuffixPos() == -1){
+					leaves.addAll(getLeaves(copyChildren.get(i)));
+				}
+				else{
+					leaves.add(copyChildren.get(i));
+				}
+			}
+		}
+
+
 		return  leaves;
 	}
 }
