@@ -3,6 +3,7 @@ package assignment06;
 import assignment06.FastA_GIESEL_MUEHLBAUER;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -85,6 +86,53 @@ public class FindQueries_YOUR_NAME {
 	 */
 	public static Collection<Integer> find(NaiveSuffixTree suffixTree, String query) {
 		// todo: please implement this
+
 		return Collections.emptyList();
+	}
+
+	public static Collection<Integer> nodeFind(NaiveSuffixTree.Node node, String query){
+		String label = node.getLetters();
+		ArrayList<Integer> found;
+		if(query.length()>label.length()){
+			if(label.equals(query.substring(0,label.length()))){
+				String newQuery = query.substring(label.length());
+				NaiveSuffixTree.Node child = node.getChild(newQuery.charAt(0));
+				System.out.println(found);
+				System.out.println(nodeFind(child,newQuery));
+				return found.addAll(nodeFind(child,newQuery));
+			}
+			else{
+				return found;
+			}
+		}
+		else{
+			if(query.equals(label.substring(0,query.length()))){
+				ArrayList<NaiveSuffixTree.Node> leaves = getLeaves(node);
+				int n = leaves.size();
+				for (int i=0; i<n; i++){
+					int pos = leaves.get(i).getSuffixPos();
+					found.add(pos);
+				}
+				return found;
+			}
+			else{
+				return found;
+			}
+		}
+	}
+
+	public static ArrayList<NaiveSuffixTree.Node> getLeaves(NaiveSuffixTree.Node node){
+		ArrayList<NaiveSuffixTree.Node> leaves;
+		var children = node.getChildren();
+		ArrayList<NaiveSuffixTree.Node> copyChildren = new ArrayList<NaiveSuffixTree.Node>(children);
+		int n = children.size();
+		for (int i=0; i<n; i++){
+			if(copyChildren.get(i).getSuffixPos() == -1){
+				leaves.addAll(getLeaves(copyChildren.get(i)));
+			}
+			else{
+				leaves.add(copyChildren.get(i));
+			}
+		}
 	}
 }
