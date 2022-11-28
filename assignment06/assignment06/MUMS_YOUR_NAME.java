@@ -1,6 +1,6 @@
 package assignment06;
 
-import assignment01.FastA_YOUR_NAME;
+import assignment06.FastA_GIESEL_MUEHLBAUER;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -18,7 +18,7 @@ public class MUMS_YOUR_NAME {
 		if (args.length != 1)
 			throw new IOException("Usage: MUMS_YOUR_NAME fasta-file");
 
-		var textItems = FastA_YOUR_NAME.read(args[0]);
+		var textItems = FastA_GIESEL_MUEHLBAUER.read(args[0]);
 		if (textItems.size() != 2)
 			throw new IOException("fasta-file must contain 2 sequence, found: " + textItems.size());
 

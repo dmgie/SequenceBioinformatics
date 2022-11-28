@@ -1,6 +1,6 @@
 package assignment06;
 
-import assignment01.FastA_YOUR_NAME;
+import assignment06.FastA_GIESEL_MUEHLBAUER;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -18,7 +18,7 @@ public class FindQueries_YOUR_NAME {
 		if(args.length!=2)
 			throw new IOException("Usage: FindQueries_YOUR_NAME text queries");
 
-		var textItems= FastA_YOUR_NAME.read(args[0]);
+		var textItems= FastA_GIESEL_MUEHLBAUER.read(args[0]);
 		if(textItems.size()!=1)
 			throw new IOException("text must contain 1 sequence, found: "+textItems.size());
 
@@ -26,7 +26,7 @@ public class FindQueries_YOUR_NAME {
 
 		var suffixTree=new NaiveSuffixTree(textItems.get(0).sequence());
 
-		var queryItems=FastA_YOUR_NAME.read(args[1]);
+		var queryItems=FastA_GIESEL_MUEHLBAUER.read(args[1]);
 
 		for(var item:queryItems) {
 			System.out.println("Query "+item.sequence());
@@ -47,7 +47,35 @@ public class FindQueries_YOUR_NAME {
 	 */
 	public static boolean contains(NaiveSuffixTree suffixTree, String query) {
 		// todo: please implement this
-		return true;
+		if (query.length()<1){
+			throw new RuntimeException("No query given");
+		}
+		NaiveSuffixTree.Node root = suffixTree.getRoot();
+		suffixTree.printTree();
+		NaiveSuffixTree.Node child = root.getChild(query.charAt(0));
+		return nodeContains(child,query);
+	}
+
+	public static boolean nodeContains(NaiveSuffixTree.Node node, String query){
+		String label = node.getLetters();
+		if(query.length()>label.length()){
+			if(label.equals(query.substring(0,label.length()))){
+				String newQuery = query.substring(label.length()-1);
+				NaiveSuffixTree.Node child = node.getChild(newQuery.charAt(0));
+				return nodeContains(child,newQuery);
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			if(query.equals(label.substring(0,query.length()))){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
 	}
 
 	/**
