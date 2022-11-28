@@ -86,19 +86,18 @@ public class FindQueries_YOUR_NAME {
 	 */
 	public static Collection<Integer> find(NaiveSuffixTree suffixTree, String query) {
 		// todo: please implement this
-
-		return Collections.emptyList();
+		NaiveSuffixTree.Node root = suffixTree.getRoot();
+		NaiveSuffixTree.Node child = root.getChild(query.charAt(0));
+		return nodeFind(child,query);
 	}
 
 	public static Collection<Integer> nodeFind(NaiveSuffixTree.Node node, String query){
 		String label = node.getLetters();
-		ArrayList<Integer> found;
+		ArrayList<Integer> found = null;
 		if(query.length()>label.length()){
 			if(label.equals(query.substring(0,label.length()))){
 				String newQuery = query.substring(label.length());
 				NaiveSuffixTree.Node child = node.getChild(newQuery.charAt(0));
-				System.out.println(found);
-				System.out.println(nodeFind(child,newQuery));
 				return found.addAll(nodeFind(child,newQuery));
 			}
 			else{
