@@ -135,6 +135,9 @@ public class FindQueries_YOUR_NAME {
 				leaves.add(copyChildren.get(i));
 			}
 		}
+		if(copyChildren.size()==0){
+			leaves.add(node);
+		}
 		return  leaves;
 	}
 }
