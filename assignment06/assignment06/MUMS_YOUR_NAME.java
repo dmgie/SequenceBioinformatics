@@ -3,6 +3,7 @@ package assignment06;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.*;
 
 /**
  * computes all MUMs in a text
@@ -32,7 +33,17 @@ public class MUMS_YOUR_NAME {
 		int end1 = seq1.length();
 		NaiveSuffixTree.Node root = suffixTree.getRoot();
 		HashMap<String, ArrayList<Integer>> potMUMs = findPotMUMs(root,end1,"");
-		System.out.println(potMUMs);
+
+		for (Map.Entry<String, ArrayList<Integer>> set : potMUMs.entrySet()){
+			int suf1 = Collections.min(set.getValue())+1;
+			int suf2 = Collections.max(set.getValue())-end1;
+
+			boolean sameprefix = (seq1.charAt(suf1-2) == seq2.charAt(suf2-2));
+			if(!sameprefix){
+				System.out.println("MUM "+ set.getKey()+" at "+ suf1+" and "+suf2);
+				System.out.println("for input " + seq1 + " and "+seq2);
+			}
+		}
 
 
 
@@ -60,8 +71,6 @@ public class MUMS_YOUR_NAME {
 
 			boolean difSeq = (suf1<end1&&suf2>end1)||(suf1>end1&&suf2<end1);
 			if(difSeq){
-				System.out.println(leaves);
-				System.out.println(label);
 				ArrayList<Integer> potMUM = new ArrayList<Integer>();
 				potMUM.add(suf1);
 				potMUM.add(suf2);
