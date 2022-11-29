@@ -10,14 +10,14 @@ import java.util.Collections;
 /**
  * find occurrences of queries in a text
  * Sequence Bioinformatics, WS 22/23
- * FindQueries_YOUR_NAME 11.22
+ * FindQueries_GIESEL_MUEHLBAUER 11.22
  */
-public class FindQueries_YOUR_NAME {
+public class FindQueries_GIESEL_MUEHLBAUER {
 	public static void main (String[] args) throws IOException {
-		System.out.println(FindQueries_YOUR_NAME.class.getSimpleName());
+		System.out.println(FindQueries_GIESEL_MUEHLBAUER.class.getSimpleName());
 
 		if(args.length!=2)
-			throw new IOException("Usage: FindQueries_YOUR_NAME text queries");
+			throw new IOException("Usage: FindQueries_GIESEL_MUEHLBAUER text queries");
 
 		var textItems= FastA_GIESEL_MUEHLBAUER.read(args[0]);
 		if(textItems.size()!=1)

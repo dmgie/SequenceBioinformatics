@@ -8,15 +8,15 @@ import java.util.*;
 /**
  * computes all MUMs in a text
  * Sequence Bioinformatics, WS 22/23
- * MUMS_YOUR_NAME, 11.22
+ * MUMS_GIESEL_MUEHLBAUER, 11.22
  */
-public class MUMS_YOUR_NAME {
+public class MUMS_GIESEL_MUEHLBAUER {
 
 	public static void main (String[] args) throws IOException {
-		System.out.println(MUMS_YOUR_NAME.class.getSimpleName());
+		System.out.println(MUMS_GIESEL_MUEHLBAUER.class.getSimpleName());
 
 		if (args.length != 1)
-			throw new IOException("Usage: MUMS_YOUR_NAME fasta-file");
+			throw new IOException("Usage: MUMS_GIESEL_MUEHLBAUER fasta-file");
 
 		var textItems = FastA_GIESEL_MUEHLBAUER.read(args[0]);
 		if (textItems.size() != 2)
