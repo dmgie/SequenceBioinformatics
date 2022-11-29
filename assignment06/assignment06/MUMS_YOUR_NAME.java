@@ -41,24 +41,27 @@ public class MUMS_YOUR_NAME {
 		// for input AGCT and GGCC
 	}
 	public static HashMap<String, ArrayList<Integer>> findPotMUMs(NaiveSuffixTree.Node node, int end1, String label){
-		ArrayList<NaiveSuffixTree.Node> directChild = new ArrayList<NaiveSuffixTree.Node>();
+		ArrayList<NaiveSuffixTree.Node> leaves = new ArrayList<NaiveSuffixTree.Node>();
 		HashMap<String, ArrayList<Integer>> potMUMs = new HashMap<String, ArrayList<Integer>>();
 		for (var child : node.getChildren()) {
 			int suffPos = child.getSuffixPos();
 			if (suffPos != -1){
-					directChild.add(child);
+					leaves.add(child);
 			}
 			else{
+				leaves = new ArrayList<NaiveSuffixTree.Node>();
 				String lab = label + child.getLetters();
 				potMUMs.putAll(findPotMUMs(child,end1,lab));
 			}
 		}
-		if (directChild.size() == 2){
-			int suf1 = directChild.get(0).getSuffixPos();
-			int suf2 = directChild.get(1).getSuffixPos();
+		if (leaves.size() == 2){
+			int suf1 = leaves.get(0).getSuffixPos();
+			int suf2 = leaves.get(1).getSuffixPos();
 
 			boolean difSeq = (suf1<end1&&suf2>end1)||(suf1>end1&&suf2<end1);
 			if(difSeq){
+				System.out.println(leaves);
+				System.out.println(label);
 				ArrayList<Integer> potMUM = new ArrayList<Integer>();
 				potMUM.add(suf1);
 				potMUM.add(suf2);
