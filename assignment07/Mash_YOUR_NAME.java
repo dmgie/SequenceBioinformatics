@@ -172,11 +172,6 @@ public class Mash_YOUR_NAME {
         }
         double z = sketch_intersect.size();
         double n = s;
-        System.out.println(sketchA);
-        System.out.println(sketchB);
-        System.out.println(sketch_intersect);
-        System.out.println(z);
-        System.out.println(sketch_union);
         double ji = z/n;
         System.out.println("JI:");
         System.out.println(ji);
@@ -192,7 +187,9 @@ public class Mash_YOUR_NAME {
      */
     public static double computeMashDistance(int k, double jaccardIJ) {
         // todo: please implement
-        return 0.0;
+        double n_k = k;
+        double d = -1/n_k * Math.log10(2*jaccardIJ/(1+jaccardIJ));
+        return d;
     }
 
     // Code for reading FastA, please don't change anything below here
