@@ -113,7 +113,6 @@ public class Mash_YOUR_NAME {
                 sketch.add(hash);
             }
         }
-        System.out.println(sketch);
         return sketch;
     }
 
@@ -173,8 +172,6 @@ public class Mash_YOUR_NAME {
         double z = sketch_intersect.size();
         double n = s;
         double ji = z/n;
-        System.out.println("JI:");
-        System.out.println(ji);
         return ji;
     }
 
