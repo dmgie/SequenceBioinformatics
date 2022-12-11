@@ -160,7 +160,7 @@ public class Mash_YOUR_NAME {
         final SortedSet<Integer> sketch_intersect = new TreeSet<>();
         //compute union and intersection
         for(int hashA: sketchA){
-            if(hashA < sketch_union.last()){
+            if(!sketch_union.contains(hashA)&&hashA < sketch_union.last()){
                 sketch_union.remove(sketch_union.last());
                 sketch_union.add(hashA);
             }
@@ -170,8 +170,15 @@ public class Mash_YOUR_NAME {
                 sketch_intersect.add(hashA);
             }
         }
-        int n = sketch_intersect.size();
-        int ji = n/s;
+        double z = sketch_intersect.size();
+        double n = s;
+        System.out.println(sketchA);
+        System.out.println(sketchB);
+        System.out.println(sketch_intersect);
+        System.out.println(z);
+        System.out.println(sketch_union);
+        double ji = z/n;
+        System.out.println("JI:");
         System.out.println(ji);
         return ji;
     }
