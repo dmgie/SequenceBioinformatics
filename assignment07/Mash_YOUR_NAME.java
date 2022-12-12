@@ -185,7 +185,7 @@ public class Mash_YOUR_NAME {
     public static double computeMashDistance(int k, double jaccardIJ) {
         // todo: please implement
         double n_k = k;
-        double d = -1/n_k * Math.log10(2*jaccardIJ/(1+jaccardIJ));
+        double d = -1/n_k * Math.log(2*jaccardIJ/(1+jaccardIJ));
         return d;
     }
 
