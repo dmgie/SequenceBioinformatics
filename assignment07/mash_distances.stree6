@@ -1,0 +1,98 @@
+#nexus [SplitsTree6]
+
+BEGIN SPLITSTREE6;
+DIMENSIONS nDataNodes=9 nAlgorithms=7;
+PROGRAM version='SplitsTree6 (version 0.3.9-alpha, built 26 Oct 2022)';
+WORKFLOW creationDate='1670944440602'; [Tue Dec 13 16:14:00 CET 2022]
+END; [SPLITSTREE6]
+
+[
+Methods:
+Analysis was performed using SplitsTree6 6.0.0_alpha (Huson and Bryant 2006).
+The original input consisted of 13 taxa and a 13 x 13 distance matrix.
+The Neighbor Net method (Bryant & Moulton 2004) was used (default options) so as to obtain 30 splits, cyclic.
+The Neighbor Joining method (Saitou and Nei 1987) was used so as to obtain one tree.
+The Show Trees method was used (default options) so as to obtain a Tree View visualization.
+The Show Splits method was used (default options) so as to obtain a Splits Network visualization.
+
+References:
+Bryant & Moulton 2004: D. Bryant and V. Moulton. Neighbor-net: An agglomerative method for the construction of phylogenetic networks. Molecular Biology and Evolution, 21(2):255– 265, 2004.
+Huson and Bryant 2006: D.H. Huson and D. Bryant. Application of phylogenetic networks in evolutionary studies. Molecular Biology and Evolution, 23:254–267, 2006.
+Saitou and Nei 1987: N. Saitou and M. Nei. The Neighbor-Joining method: a new method for reconstructing phylogenetic trees. Molecular Biology and Evolution, 4:406-425, 1987.
+]
+
+BEGIN TAXA;
+TITLE 'Input Taxa';
+LINK ALGORITHM = 'Input Data Loader';
+DIMENSIONS ntax=13;
+TAXLABELS
+	[1] 'Xanthomonadales_bacterium_UBA2790_UBA2790_contig_10077'
+	[2] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA2327_UBA2327_contig_100'
+	[3] 'Candidatus_Accumulibacter_sp._66-26_scnpilot_expt_750_p_scaffold_104'
+	[4] 'Candidatus_Accumulibacter_phosphatis_isolate_HKU-1_contig10026'
+	[5] 'Candidatus_Accumulibacter_sp._isolate_SCELSE-1_FAZ92_1'
+	[6] 'Candidatus_Accumulibacter_sp._BA-92_contig000001'
+	[7] 'Candidatus_Accumulibacter_sp._S1_isolate_3_genome_assembly:_ACCAA_Contig_1'
+	[8] 'Candidatus_Accumulibacter_phosphatis_clade_IIA_str._UW-1'
+	[9] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA5574_UBA5574_contig_10'
+	[10] 'Candidatus_Accumulibacter_phosphatis_strain_Bin19_NODE_10046_length_4474_cov_280.415_ID_10280659'
+	[11] 'Candidatus_Accumulibacter_sp._BA-93_contig000001'
+	[12] 'Candidatus_Accumulibacter_sp._SK-12_contig000001'
+	[13] 'Candidatus_Accumulibacter_phosphatis_isolate_UW-LDO-IC_UW-LDO-IC-MS_0'
+;
+[DISPLAYLABELS;]
+[TAXINFO;]
+END; [TAXA]
+
+BEGIN ALGORITHM;
+TITLE 'Taxa Filter';
+LINK ALGORITHM = 'Input Data Loader';
+NAME 'Taxa Filter';
+OPTIONS
+;
+END; [ALGORITHM]
+
+BEGIN TAXA;
+TITLE 'Working Taxa';
+LINK ALGORITHM = 'Taxa Filter';
+DIMENSIONS ntax=13;
+TAXLABELS
+	[1] 'Xanthomonadales_bacterium_UBA2790_UBA2790_contig_10077'
+	[2] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA2327_UBA2327_contig_100'
+	[3] 'Candidatus_Accumulibacter_sp._66-26_scnpilot_expt_750_p_scaffold_104'
+	[4] 'Candidatus_Accumulibacter_phosphatis_isolate_HKU-1_contig10026'
+	[5] 'Candidatus_Accumulibacter_sp._isolate_SCELSE-1_FAZ92_1'
+	[6] 'Candidatus_Accumulibacter_sp._BA-92_contig000001'
+	[7] 'Candidatus_Accumulibacter_sp._S1_isolate_3_genome_assembly:_ACCAA_Contig_1'
+	[8] 'Candidatus_Accumulibacter_phosphatis_clade_IIA_str._UW-1'
+	[9] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA5574_UBA5574_contig_10'
+	[10] 'Candidatus_Accumulibacter_phosphatis_strain_Bin19_NODE_10046_length_4474_cov_280.415_ID_10280659'
+	[11] 'Candidatus_Accumulibacter_sp._BA-93_contig000001'
+	[12] 'Candidatus_Accumulibacter_sp._SK-12_contig000001'
+	[13] 'Candidatus_Accumulibacter_phosphatis_isolate_UW-LDO-IC_UW-LDO-IC-MS_0'
+;
+[DISPLAYLABELS;]
+[TAXINFO;]
+END; [TAXA]
+
+BEGIN DISTANCES;
+TITLE 'Input Distances';
+LINK ALGORITHM = 'Input Data Loader';
+DIMENSIONS ntax=13;
+FORMAT labels=left diagonal triangle=Both;
+MATRIX
+[1] 'Xanthomonadales_bacterium_UBA2790_UBA2790_contig_10077'                                             0 0.12374 0.155905 0.176255 0.135595 0.176255 0 0.14402 0.14402 0.135595 0.155905 0.12374 0.155905
+[2] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA2327_UBA2327_contig_100'                            0.12374 0 0.106095 0.106095 0.05373 0.111925 0.11535 0.09911 0.106095 0.101255 0.101255 0.062395 0.11535
+[3] 'Candidatus_Accumulibacter_sp._66-26_scnpilot_expt_750_p_scaffold_104'                               0.155905 0.106095 0 0.088835 0.091865 0.09911 0.111925 0.09911 0.111925 0.111925 0.10886 0.09351 0.091865
+[4] 'Candidatus_Accumulibacter_phosphatis_isolate_HKU-1_contig10026'                                     0.176255 0.106095 0.088835 0 0.09911 0.045305 0.106095 0.09911 0.106095 0.10357 0.066495 0.129065 0.061335
+[5] 'Candidatus_Accumulibacter_sp._isolate_SCELSE-1_FAZ92_1'                                             0.135595 0.05373 0.091865 0.09911 0 0.11535 0.106095 0.097115 0.10357 0.09031 0.09351 0.05703 0.111925
+[6] 'Candidatus_Accumulibacter_sp._BA-92_contig000001'                                                   0.176255 0.111925 0.09911 0.045305 0.11535 0 0.106095 0.10357 0.111925 0.12374 0.06186 0.129065 0.066495
+[7] 'Candidatus_Accumulibacter_sp._S1_isolate_3_genome_assembly:_ACCAA_Contig_1'                         0 0.11535 0.111925 0.106095 0.106095 0.106095 0 0.09911 0.09911 0.106095 0.10357 0.101255 0.106095
+[8] 'Candidatus_Accumulibacter_phosphatis_clade_IIA_str._UW-1'                                           0.14402 0.09911 0.09911 0.09911 0.097115 0.10357 0.09911 0 0.09031 0.087435 0.106095 0.101255 0.101255
+[9] 'Candidatus_Accumulibacter_phosphatis_isolate_UBA5574_UBA5574_contig_10'                             0.14402 0.106095 0.111925 0.106095 0.10357 0.111925 0.09911 0.09031 0 0.034575 0.111925 0.111925 0.11535
+[10] 'Candidatus_Accumulibacter_phosphatis_strain_Bin19_NODE_10046_length_4474_cov_280.415_ID_10280659'   0.135595 0.101255 0.111925 0.10357 0.09031 0.12374 0.106095 0.087435 0.034575 0 0.11535 0.101255 0.11535
+[11] 'Candidatus_Accumulibacter_sp._BA-93_contig000001'                                                   0.155905 0.101255 0.10886 0.066495 0.09351 0.06186 0.10357 0.106095 0.111925 0.11535 0 0.111925 0.065255
+[12] 'Candidatus_Accumulibacter_sp._SK-12_contig000001'                                                   0.12374 0.062395 0.09351 0.129065 0.05703 0.129065 0.101255 0.101255 0.111925 0.101255 0.111925 0 0.10886
+[13] 'Candidatus_Accumulibacter_phosphatis_isolate_UW-LDO-IC_UW-LDO-IC-MS_0'                              0.155905 0.11535 0.091865 0.061335 0.111925 0.066495 0.106095 0.101255 0.11535 0.11535 0.065255 0.10886 0
+;
+END; [DISTANCES]
