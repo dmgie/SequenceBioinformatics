@@ -1,6 +1,6 @@
 package assignment08;
 
-import assignment01.FastA_YOUR_NAME;
+import assignment08.FastA_YOUR_NAME;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,11 +78,26 @@ public class Minimap_YOUR_NAME {
 	 * @return k-mer at given position or its reverse complement
 	 */
 	public static String sk(String sequence,int pos,int k,int r) {
+		String kmer = sequence.substring(pos,pos+k);
 		if(r==0)
-			return sequence.substring(pos,pos+k);
+			return kmer;
 		else {
 			var buf=new StringBuilder();
 			// todo: implement reverse-complement of k-mer here
+			for(int i = 0; i < kmer.length(); i++ ){
+				if(kmer.charAt(i) == 'A'){
+					buf.append('T');
+				}
+				else if(kmer.charAt(i) == 'T'){
+					buf.append('A');
+				}
+				else if(kmer.charAt(i) == 'G'){
+					buf.append('C');
+				}
+				else if(kmer.charAt(i) == 'C'){
+					buf.append('G');
+				}
+			}
 			
 			return buf.toString();
 		}
@@ -96,6 +111,7 @@ public class Minimap_YOUR_NAME {
 	public static int h(String s) {
 		var value = 0;
 		// todo: implement hashing as described in script
+		
 		return value;
 	}
 
