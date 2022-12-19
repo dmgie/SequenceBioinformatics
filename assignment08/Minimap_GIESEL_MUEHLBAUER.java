@@ -1,6 +1,6 @@
 package assignment08;
 
-import assignment01.FastA_GIESEL_MUEHLBAUER;
+import assignment08.FastA_GIESEL_MUEHLBAUER;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -116,11 +116,11 @@ public class Minimap_GIESEL_MUEHLBAUER {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) == 'A') {
 				value += 0 * Math.pow(4, s.length() - i - 1);
-			} else if (s.charAt(i) == 'T') {
-				value += 1 * Math.pow(4, s.length() - i - 1);
 			} else if (s.charAt(i) == 'C') {
-				value += 2 * Math.pow(4, s.length() - i - 1);
+				value += 1 * Math.pow(4, s.length() - i - 1);
 			} else if (s.charAt(i) == 'G') {
+				value += 2 * Math.pow(4, s.length() - i - 1);
+			} else if (s.charAt(i) == 'T') {
 				value += 3 * Math.pow(4, s.length() - i - 1);
 			}
 		}
@@ -216,12 +216,14 @@ public class Minimap_GIESEL_MUEHLBAUER {
 		for (var minimizer : m) {
 			// for each element in hashmap, check if h value is equal to minimizer h value
 			for (var entry : targetIndex.entrySet()) {
-				// if they're the same add the KmerHit(location,strand,num diagonal,pos in
+				// if they're the same add the KmerHit(num of target seq,strand,num diagonal,pos
+				// in
 				// target) to the array
 				var a = entry.getKey();
 				var b = targetIndex.get(a);
 				if (a == minimizer.h()) {
-					A.add(new KMerHit(b.t, minimizer.r(), minimizer.pos(), minimizer.pos()));
+					A.add(new KMerHit(entry.getKey(), minimizer.r(), minimizer.pos(),
+							entry.getValue().iterator().next().t()));
 				}
 			}
 		}
@@ -267,7 +269,7 @@ public class Minimap_GIESEL_MUEHLBAUER {
 
 				// add match to results
 				result.add(new Match(A.get(e).t, A.get(e).r, minQuery, maxQuery, minTarget, maxTarget));
-				b = e + 1
+				b = e + 1;
 
 			}
 
