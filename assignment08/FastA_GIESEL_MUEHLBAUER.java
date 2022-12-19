@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * FastA_GIESEL_MUEHLBAUER Author(s): GIESEL_MUEHLBAUER Sequence Bioinformatics, WS 22/23
  */
-public class FastA_YOUR_NAME {
+public class FastA_GIESEL_MUEHLBAUER {
 
 	// Main function
 	public static void main(String[] args) throws IOException {
