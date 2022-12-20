@@ -224,27 +224,52 @@ public class Minimap_YOUR_NAME {
 			// todo: compute matches or ``clusters'' (as described in script, algorithm 4, part;s 2 and 3
 
 			if(e+1 == A.size()||A.get(e+1).t!=A.get(e).t||A.get(e+1).r!=A.get(e).r||A.get(e+1).c-A.get(e).c >= epsilon){
-				int bq = 0;
-				int eq = 0;
-				int bt = 0;
-				int et = 0;
-				if(A.get(e).r == 0){
-					bt = A.get(b).pos;
-					et = A.get(e).pos+k;
-					bq = A.get(b).c + A.get(b).pos;
-					eq = A.get(e).c + A.get(e).pos+k;
+				int bq = (int) Double.POSITIVE_INFINITY;
+				int eq = (int) Double.NEGATIVE_INFINITY;
+				int bt = (int) Double.POSITIVE_INFINITY;
+				int et = (int) Double.NEGATIVE_INFINITY;
+				for(int q = b; q<=e; q++){
+					if(A.get(q).r == 0){
+						int tar = A.get(q).pos;
+						int que = A.get(q).c + A.get(q).pos;
+						if(que<bq){
+							bq = que;
+						}
+						if(que+k>eq){
+							eq = que+k;
+						}
+						if(tar<bt){
+							bt = tar;
+						}
+						if(tar+k>et){
+							et = tar+k;
+						}
+					}
+					else{
+						int tar = A.get(q).pos;
+						int que = A.get(q).c - A.get(q).pos;
+						if(que<bq){
+							bq = que;
+						}
+						if(que+k>eq){
+							eq = que+k;
+						}
+						if(tar<bt){
+							bt = tar;
+						}
+						if(tar+k>et){
+							et = tar+k;
+						}
+					}
 				}
-				else{
-					bt = A.get(b).pos;
-					et = A.get(e).pos+k;
-					bq = A.get(e).c - A.get(e).pos;
-					eq = A.get(b).c - A.get(b).pos+k;
-				}
+
+
 				Match C = new Match(A.get(e).t, A.get(e).r,bq,eq,bt,et);
 				b = e+1;
 				result.add(C);
 			}
 		}
+		//System.out.println(A);
 		return result;
 	}
 
