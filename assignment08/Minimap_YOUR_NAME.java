@@ -170,7 +170,7 @@ public class Minimap_YOUR_NAME {
 		int T = targets.size();
 
 		// todo: implement computation of target index as described in script (algorithm 1)
-		for(int t = 1; t<=T; t++){
+		for(int t = 0; t<T; t++){
 			var M = minimizerSketch(targets.get(t).sequence(), w,k);
 			for (Minimizer minimizer: M) {
 				Set<Location> hSet = targetIndex.get(minimizer.h);
@@ -203,12 +203,14 @@ public class Minimap_YOUR_NAME {
 		Set<Minimizer> M = minimizerSketch(query,w,k);
 
 		for(Minimizer min : M){
-			for (Location loc: targetIndex.get(min.h)){
-				if(min.r==loc.r){
-					A.add(new KMerHit(loc.t,0,min.pos-loc.pos,loc.pos));
-				}
-				else{
-					A.add(new KMerHit(loc.t,1,min.pos+loc.pos,loc.pos));
+			if(!Objects.isNull(targetIndex.get(min.h))){
+				for (Location loc: targetIndex.get(min.h)){
+					if(min.r==loc.r){
+						A.add(new KMerHit(loc.t,0,min.pos-loc.pos,loc.pos));
+					}
+					else{
+						A.add(new KMerHit(loc.t,1,min.pos+loc.pos,loc.pos));
+					}
 				}
 			}
 		}
@@ -220,9 +222,20 @@ public class Minimap_YOUR_NAME {
 		var b=0;
 		for(var e=0;e<A.size();e++) {
 			// todo: compute matches or ``clusters'' (as described in script, algorithm 4, part;s 2 and 3
-			if(e == A.size()||A.get(e+1).t!=A.get(e).t||A.get(e+1).r!=A.get(e).r||A.get(e+1).c-A.get(e).c >= epsilon){
-				Match C = new Match(A.get(e).t, A.get(e).r, A.get(b).pos, A.get(e).pos, A.get(b).c, A.get(e).c);
+
+			if(e+1 == A.size()||A.get(e+1).t!=A.get(e).t||A.get(e+1).r!=A.get(e).r||A.get(e+1).c-A.get(e).c >= epsilon){
+				int begin = 0;
+				int end = 0;
+				if(A.get(e).r == 0){
+					begin = A.get(b).c + A.get(b).pos+1;
+					end = A.get(e).c + A.get(e).pos+16;
+				}
+				else{
+
+				}
+				Match C = new Match(A.get(e).t+1, A.get(e).r, A.get(b).pos+1, A.get(e).pos+16, begin, end);
 				b = e+1;
+				System.out.println(C);
 			}
 		}
 		return result;
