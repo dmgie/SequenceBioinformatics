@@ -3,10 +3,7 @@ package assignment08;
 import assignment08.FastA_YOUR_NAME;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * proof-of-concept implementation for the basic minimap algorithm
@@ -98,7 +95,7 @@ public class Minimap_YOUR_NAME {
 					buf.append('G');
 				}
 			}
-			
+			buf.reverse();
 			return buf.toString();
 		}
 	}
@@ -113,17 +110,14 @@ public class Minimap_YOUR_NAME {
 		// todo: implement hashing as described in script
 		int len = s.length();
 		for(int i = 0; i < len; i++ ) {
-			if(s.charAt(i) == 'A'){
-				value += 0;
-			}
-			else if(s.charAt(i) == 'T'){
-				value += Math.pow(4,len-i+1);
+			if(s.charAt(i) == 'C'){
+				value += Math.pow(4,len-i-1);
 			}
 			else if(s.charAt(i) == 'G'){
-				value += 2 * Math.pow(4,len-i+1);
+				value += 2 * Math.pow(4,len-i-1);
 			}
-			else if(s.charAt(i) == 'C'){
-				value += 3 * Math.pow(4,len-i+1);
+			else if(s.charAt(i) == 'T'){
+				value += 3 * Math.pow(4,len-i-1);
 			}
 		}
 		return value;
@@ -180,7 +174,11 @@ public class Minimap_YOUR_NAME {
 			var M = minimizerSketch(targets.get(t).sequence(), w,k);
 			for (Minimizer minimizer: M) {
 				Set<Location> hSet = targetIndex.get(minimizer.h);
-				hSet.add(new Location(t,minimizer.pos, minimizer.r));
+				Location loc = new Location(t,minimizer.pos, minimizer.r);
+				if(Objects.isNull(hSet)){
+					hSet = new HashSet<Location>();
+				}
+				hSet.add(loc);
 				targetIndex.put(minimizer.h, hSet);
 			}
 		}
@@ -202,6 +200,18 @@ public class Minimap_YOUR_NAME {
 		var A=new ArrayList<KMerHit>();
 
 		// todo: compute array of k-mer hits (as described in script, algorithm 4, part 1)
+		Set<Minimizer> M = minimizerSketch(query,w,k);
+
+		for(Minimizer min : M){
+			for (Location loc: targetIndex.get(min.h)){
+				if(min.r==loc.r){
+					A.add(new KMerHit(loc.t,0,min.pos-loc.pos,loc.pos));
+				}
+				else{
+					A.add(new KMerHit(loc.t,1,min.pos+loc.pos,loc.pos));
+				}
+			}
+		}
 
 		A.sort(KMerHit::compareTo);
 
@@ -210,6 +220,10 @@ public class Minimap_YOUR_NAME {
 		var b=0;
 		for(var e=0;e<A.size();e++) {
 			// todo: compute matches or ``clusters'' (as described in script, algorithm 4, part;s 2 and 3
+			if(e == A.size()||A.get(e+1).t!=A.get(e).t||A.get(e+1).r!=A.get(e).r||A.get(e+1).c-A.get(e).c >= epsilon){
+				Match C = new Match(A.get(e).t, A.get(e).r, A.get(b).pos, A.get(e).pos, A.get(b).c, A.get(e).c);
+				b = e+1;
+			}
 		}
 		return result;
 	}
