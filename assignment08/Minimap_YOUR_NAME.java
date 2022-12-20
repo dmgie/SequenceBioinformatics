@@ -224,18 +224,25 @@ public class Minimap_YOUR_NAME {
 			// todo: compute matches or ``clusters'' (as described in script, algorithm 4, part;s 2 and 3
 
 			if(e+1 == A.size()||A.get(e+1).t!=A.get(e).t||A.get(e+1).r!=A.get(e).r||A.get(e+1).c-A.get(e).c >= epsilon){
-				int begin = 0;
-				int end = 0;
+				int bq = 0;
+				int eq = 0;
+				int bt = 0;
+				int et = 0;
 				if(A.get(e).r == 0){
-					begin = A.get(b).c + A.get(b).pos+1;
-					end = A.get(e).c + A.get(e).pos+16;
+					bt = A.get(b).pos;
+					et = A.get(e).pos+k;
+					bq = A.get(b).c + A.get(b).pos;
+					eq = A.get(e).c + A.get(e).pos+k;
 				}
 				else{
-
+					bt = A.get(b).pos;
+					et = A.get(e).pos+k;
+					bq = A.get(e).c - A.get(e).pos;
+					eq = A.get(b).c - A.get(b).pos+k;
 				}
-				Match C = new Match(A.get(e).t+1, A.get(e).r, A.get(b).pos+1, A.get(e).pos+16, begin, end);
+				Match C = new Match(A.get(e).t, A.get(e).r,bq,eq,bt,et);
 				b = e+1;
-				System.out.println(C);
+				result.add(C);
 			}
 		}
 		return result;
