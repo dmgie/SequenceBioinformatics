@@ -173,8 +173,17 @@ public class Minimap_YOUR_NAME {
 	 */
 	public static HashMap<Integer,Set<Location>> computeTargetIndex(ArrayList<FastA_YOUR_NAME.Pair> targets, int w, int k) {
 		var targetIndex= new HashMap<Integer,Set<Location>>();
+		int T = targets.size();
 
 		// todo: implement computation of target index as described in script (algorithm 1)
+		for(int t = 1; t<=T; t++){
+			var M = minimizerSketch(targets.get(t).sequence(), w,k);
+			for (Minimizer minimizer: M) {
+				Set<Location> hSet = targetIndex.get(minimizer.h);
+				hSet.add(new Location(t,minimizer.pos, minimizer.r));
+				targetIndex.put(minimizer.h, hSet);
+			}
+		}
 
 		return targetIndex;
 	}
