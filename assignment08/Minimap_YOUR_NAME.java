@@ -138,8 +138,28 @@ public class Minimap_YOUR_NAME {
 	 */
 	public static Set<Minimizer> minimizerSketch(String s, int w, int k) {
 		var sketch=new HashSet<Minimizer>();
-
+		int l = s.length();
 		// todo: implement computation of minimizer sketch as described in script (algorithm 1)
+		for(int i = 1; i<=l-w-k+1;i++){
+			double m = Double.POSITIVE_INFINITY;
+			for(int j = 0; j<=w-1; j++){
+				int u = h(sk(s,i+j,k,0));
+				int v = h(sk(s,i+j,k,1));
+				if(u!=v){
+					m = Math.min(m,Math.min(u,v));
+				}
+			}
+			for(int j = 0; j <= w-1; j++){
+				int u = h(sk(s,i+j,k,0));
+				int v = h(sk(s,i+j,k,1));
+				if(u<v&&u==m){
+					sketch.add(new Minimizer((int) m,i+j,0));
+				}
+				else if(u>v&&v==m){
+					sketch.add(new Minimizer((int) m,i+j,1));
+				}
+			}
+		}
 
 		return sketch;
 	}
