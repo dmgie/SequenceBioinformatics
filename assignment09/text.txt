@@ -1,0 +1,3 @@
+The usual statistics that are used to describe the qualities of assemblies are the: N50, L50 and the number/length of contigs.
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5436433/#:~:text=N50%20is%20a%20metric%20widely,least%2050%20%25%20of%20the%20assembly.
