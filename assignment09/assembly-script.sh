@@ -59,7 +59,7 @@ get_statistics() {
 }
 
 # Run normally
-# assembly pacbio-reads.fastq.gz pacbio-reads-overlaps.paf.gz
+assembly pacbio-reads.fastq.gz pacbio-reads-overlaps.paf.gz
 get_statistics pacbio-reads.gfa
 
 # # Make subset
